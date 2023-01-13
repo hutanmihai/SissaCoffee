@@ -58,7 +58,7 @@ namespace SissaCoffee.Helpers.JwtUtils
                 tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
                
                 var jwtToken = (JwtSecurityToken)validatedToken; 
-                var userId = new Guid(jwtToken.Claims.FirstOrDefault(x => x.Type == "id").Value);
+                var userId = new Guid(jwtToken.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
                
                 return userId;
             }

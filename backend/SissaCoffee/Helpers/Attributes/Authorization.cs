@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using SissaCoffee.Models;
 
 namespace SissaCoffee.Helpers.Attributes
 {
-    public class AuthorizationAttribute:Attribute, IAuthorizationFilter
+    public class AuthorizationAttribute : Attribute, IAuthorizationFilter
     {
-        private readonly ICollection<ApplicationRole> _roles;
+        private readonly IList<string> _roles;
 
-        public AuthorizationAttribute(params ApplicationRole[] roles)
+        public AuthorizationAttribute(params string[] roles)
         {
             _roles = roles;
         }
@@ -16,20 +15,27 @@ namespace SissaCoffee.Helpers.Attributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var unauthorizedStatusObject = new JsonResult(new { Message = "Unauthorized" })
-            { StatusCode = StatusCodes.Status401Unauthorized };
+                { StatusCode = StatusCodes.Status401Unauthorized };
 
-            if(_roles == null)
+            if (_roles.Count == 0)
             {
                 context.Result = unauthorizedStatusObject;
+                return;
             }
-            
-            var actualRoles = context.HttpContext.Items["Roles"] as IList<String>;
+
+            if (!context.HttpContext.Items.TryGetValue("Roles", out var actualRoles) || !(actualRoles is IList<string> actualRolesList))
+            {
+                context.Result = new JsonResult(new { Message = "AICI SE BLOCHEAZA1"})
+                    { StatusCode = StatusCodes.Status401Unauthorized };
+                return;
+            }
 
             foreach (var role in _roles)
             {
-                if (!actualRoles.Contains(role.ToString()))
+                if (!actualRolesList.Contains(role))
                 {
                     context.Result = unauthorizedStatusObject;
+                    return;
                 }
             }
         }
