@@ -23,11 +23,14 @@ namespace SissaCoffee.Helpers.Attributes
                 context.Result = unauthorizedStatusObject;
             }
             
-            ApplicationUser? user = context.HttpContext.Items["ApplicationUser"] as ApplicationUser;
+            var actualRoles = context.HttpContext.Items["Roles"] as IList<String>;
 
-            if (user == null || !user.Roles.Any(role => _roles.Contains(role)))
+            foreach (var role in _roles)
             {
-                context.Result = unauthorizedStatusObject;
+                if (!actualRoles.Contains(role.ToString()))
+                {
+                    context.Result = unauthorizedStatusObject;
+                }
             }
         }
     }

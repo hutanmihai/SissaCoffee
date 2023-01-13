@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SissaCoffee.Data;
 using SissaCoffee.Helpers.Extensions;
+using SissaCoffee.Helpers.Middleware;
 using SissaCoffee.Helpers.Seeders;
 using SissaCoffee.Models;
 
@@ -54,6 +55,7 @@ app.UseCors(builder2 => builder2.AllowAnyMethod().AllowAnyHeader().AllowCredenti
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 
