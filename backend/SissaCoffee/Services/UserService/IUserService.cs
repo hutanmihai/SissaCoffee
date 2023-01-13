@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using SissaCoffee.Models.DTOs.User;
 
-namespace SissaCoffee.Services;
+namespace SissaCoffee.Services.UserService;
 
 public interface IUserService
 {

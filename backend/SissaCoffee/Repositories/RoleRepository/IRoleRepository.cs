@@ -5,5 +5,5 @@ namespace SissaCoffee.Repositories.RoleRepository;
 
 public interface IRoleRepository: IGenericRepository<ApplicationRole>
 {
-    public Task<ApplicationRole?> GetByNameAsync(string name);
+    public Task<ApplicationRole?> GetRoleByNameAsync(string name);
 }

@@ -11,7 +11,7 @@ public class RoleRepository: GenericRepository<ApplicationRole>, IRoleRepository
     {
     }
 
-    public async Task<ApplicationRole?> GetByNameAsync(string name)
+    public async Task<ApplicationRole?> GetRoleByNameAsync(string name)
     {
         return await _context.ApplicationRoles.FirstOrDefaultAsync(r => r.Name == name);
     }

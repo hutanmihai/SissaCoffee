@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SissaCoffee.Models;
 using SissaCoffee.Models.DTOs.User;
-using SissaCoffee.Services;
+using SissaCoffee.Services.UserService;
 
 namespace SissaCoffee.Controllers
 {
