@@ -25,7 +25,7 @@ namespace SissaCoffee.Helpers.Attributes
 
             if (!context.HttpContext.Items.TryGetValue("Roles", out var actualRoles) || !(actualRoles is IList<string> actualRolesList))
             {
-                context.Result = new JsonResult(new { Message = "AICI SE BLOCHEAZA1"})
+                context.Result = new JsonResult(new { Message = "Unauthorized"})
                     { StatusCode = StatusCodes.Status401Unauthorized };
                 return;
             }
