@@ -1,33 +1,31 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SissaCoffee.Helpers.JwtUtils;
 using SissaCoffee.Models;
-using SissaCoffee.Services.UserService;
 
 namespace SissaCoffee.Helpers.Middleware
 {
     public class JwtMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public JwtMiddleware(RequestDelegate next, UserManager<ApplicationUser> userManager)
+        public JwtMiddleware(RequestDelegate next)
         {
             _next = next;
-            _userManager = userManager;
         }
 
-        public async Task Invoke(HttpContext httpContext, IUserService userService, IJwtUtils jwtUtils)
+        public async Task Invoke(HttpContext httpContext, IJwtUtils jwtUtils, UserManager<ApplicationUser> userManager)
         {
-            var token = httpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
+            string authHeader = httpContext.Request.Headers["Authorization"].ToString();
+            var token = authHeader.Split(" ").Last();
+            
             var userId = jwtUtils.ValidateJwtToken(token);
 
             if(userId != Guid.Empty)
             {
-                var user = await _userManager.FindByIdAsync(userId.ToString());
+                var user = await userManager.FindByIdAsync(userId.ToString());
                 if (user != null)
                 {
-                    var roles = await _userManager.GetRolesAsync(user);
+                    var roles = await userManager.GetRolesAsync(user);
                     httpContext.Items["Roles"] = roles;
                 }
             }

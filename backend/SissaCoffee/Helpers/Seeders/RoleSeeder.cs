@@ -23,14 +23,14 @@ public class RoleSeeder
         
         var roles = _configuration.GetSection("Identity:DefaultRoles").Get<List<string>>();
         foreach (var role in roles)
-         {
-             if (_roleManager.RoleExistsAsync(role).Result) continue;
+        {
+            if (_roleManager.RoleExistsAsync(role).Result) continue;
                          
-             var result = _roleManager.CreateAsync(new ApplicationRole { Name = role }).Result;
-             if (!result.Succeeded)
-             {
+            var result = _roleManager.CreateAsync(new ApplicationRole { Name = role }).Result;
+            if (!result.Succeeded)
+            {
                  throw new Exception(string.Join('\n', result.Errors));
-             }
-         }
+            }
+        }
     }
 }
