@@ -30,13 +30,18 @@ namespace SissaCoffee.Helpers.Attributes
                 return;
             }
 
+            int count = 0;
             foreach (var role in _roles)
             {
-                if (!actualRolesList.Contains(role))
+                if (actualRolesList.Contains(role))
                 {
-                    context.Result = unauthorizedStatusObject;
-                    return;
+                    count++;
                 }
+            }
+
+            if (count == 0)
+            {
+                context.Result = unauthorizedStatusObject;
             }
         }
     }

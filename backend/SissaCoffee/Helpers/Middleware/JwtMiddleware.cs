@@ -20,6 +20,8 @@ namespace SissaCoffee.Helpers.Middleware
             
             var userId = jwtUtils.ValidateJwtToken(token);
 
+            httpContext.Items["UserId"] = userId.ToString();
+
             if(userId != Guid.Empty)
             {
                 var user = await userManager.FindByIdAsync(userId.ToString());

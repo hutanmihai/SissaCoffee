@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using SissaCoffee.Data;
 using SissaCoffee.Models;
 
 namespace SissaCoffee.Helpers.Seeders;
@@ -45,6 +44,7 @@ public class UserSeeder
                 if (result.Succeeded)
                 {
                     _userManager.AddToRoleAsync(admin, "Admin").Wait();
+                    _userManager.AddToRoleAsync(admin, "Customer").Wait();
                 }
             }
         }

@@ -67,4 +67,23 @@ public class UserService: IUserService
 
         return _jwtUtils.GenerateJwtToken(user);
     }
+    
+    public async Task<UserDTO?> GetUserDtoByIdAsync(Guid id)
+    {
+        var user =  await _userManager.FindByIdAsync(id.ToString());
+        var roles = await _userManager.GetRolesAsync(user);
+        return new UserDTO
+        {
+            Id = user.Id,
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Roles = roles,
+        };
+    }
+    
+    public async Task<ApplicationUser?> GetUserByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
 }

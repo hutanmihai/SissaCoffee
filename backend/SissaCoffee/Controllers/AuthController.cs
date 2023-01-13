@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SissaCoffee.Models;
 using SissaCoffee.Models.DTOs.User;
 using SissaCoffee.Services.UserService;
 
@@ -11,12 +9,10 @@ namespace SissaCoffee.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
 
-        public AccountsController(UserManager<ApplicationUser> userManager, IUserService userService)
+        public AccountsController(IUserService userService)
         {
-            _userManager = userManager;
             _userService = userService;
         }
 
@@ -24,7 +20,7 @@ namespace SissaCoffee.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterUserDTO dto)
         {
-            var user = await _userManager.FindByEmailAsync(dto.Email);
+            var user = await _userService.GetUserByEmailAsync(dto.Email);
 
             if (user is not null)
             {
