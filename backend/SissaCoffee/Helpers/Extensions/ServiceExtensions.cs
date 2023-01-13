@@ -1,4 +1,5 @@
-﻿using SissaCoffee.Helpers.Seeders;
+﻿using SissaCoffee.Helpers.JwtUtils;
+using SissaCoffee.Helpers.Seeders;
 using SissaCoffee.Repositories.RoleRepository;
 using SissaCoffee.Repositories.UserRepository;
 using SissaCoffee.Services.UserService;
@@ -28,6 +29,13 @@ public static class ServiceExtensions
         {
             services.AddTransient<RoleSeeder>();
             services.AddTransient<UserSeeder>();
+            return services;
+        }
+        
+        public static IServiceCollection AddUtils(this IServiceCollection services)
+        {
+            services.AddTransient<IJwtUtils, JwtUtils.JwtUtils>();
+
             return services;
         }
     }

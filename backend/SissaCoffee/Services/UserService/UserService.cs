@@ -1,13 +1,10 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using SissaCoffee.Models;
 using SissaCoffee.Models.DTOs.User;
 using SissaCoffee.Repositories.RoleRepository;
 using SissaCoffee.Repositories.UserRepository;
+using SissaCoffee.Helpers.JwtUtils;
 
 namespace SissaCoffee.Services.UserService;
 
@@ -16,16 +13,18 @@ public class UserService: IUserService
     private readonly IConfiguration _configuration;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IUserRepository _userRepository;
+    private readonly IJwtUtils _jwtUtils;
     private readonly IRoleRepository _roleRepository;
     private readonly IMapper _mapper;
 
-    public UserService(IConfiguration configuration, UserManager<ApplicationUser> userManager, IRoleRepository roleRepository, IUserRepository userRepository, IMapper mapper)
+    public UserService(IConfiguration configuration, UserManager<ApplicationUser> userManager, IRoleRepository roleRepository, IUserRepository userRepository, IMapper mapper, IJwtUtils jwtUtils)
     {
         _configuration = configuration;
         _userManager = userManager;
         _roleRepository = roleRepository;
         _userRepository = userRepository;
         _mapper = mapper;
+        _jwtUtils = jwtUtils;
     }
 
     public async Task<IdentityResult> RegisterUserAsync(RegisterUserDTO dto)
@@ -66,23 +65,6 @@ public class UserService: IUserService
 
         if (!await _userManager.CheckPasswordAsync(user, dto.Password)) return null;
 
-        IdentityOptions _options = new IdentityOptions();
-        var roles = await _userManager.GetRolesAsync(user);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new []
-            {
-                new Claim("UserId", user.Id.ToString())
-            }),
-            Expires = DateTime.UtcNow.AddDays(10),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"])),
-                SecurityAlgorithms.HmacSha256Signature)
-        };
-
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-        
-        return tokenHandler.WriteToken(securityToken);
+        return _jwtUtils.GenerateJwtToken(user);
     }
 }
