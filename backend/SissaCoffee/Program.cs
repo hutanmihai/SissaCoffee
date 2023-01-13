@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SissaCoffee.Data;
 using SissaCoffee.Helpers.Extensions;
+using SissaCoffee.Helpers.Seeders;
 using SissaCoffee.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,10 +33,13 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddRepositories();
 builder.Services.AddServices();
+builder.Services.AddSeeders();
 
 builder.Services.AddCors();
 
 var app = builder.Build();
+
+SeedData(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -53,3 +57,15 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void SeedData(IHost app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<RoleSeeder>();
+        var service2 = scope.ServiceProvider.GetService<UserSeeder>();
+        service.SeedRoles();
+        service2.SeedUsers();
+    }
+}

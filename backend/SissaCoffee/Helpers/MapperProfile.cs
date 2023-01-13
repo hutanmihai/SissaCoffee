@@ -10,6 +10,7 @@ namespace SissaCoffee.Helpers
         {
             CreateMap<ApplicationUser, LoginUserDTO>();
             CreateMap<ApplicationUser, RegisterUserDTO>();
+            CreateMap<ApplicationUser, UserDTO>();
         }
 
     }
