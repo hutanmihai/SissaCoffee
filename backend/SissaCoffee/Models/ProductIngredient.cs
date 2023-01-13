@@ -4,9 +4,9 @@ namespace SissaCoffee.Models;
 
 public class ProductIngredient: BaseEntity
 {
-    public Product Product { get; set; }
-    public Ingredient Ingredient { get; set; }
-    
-    public Guid ProductId { get; set; }
-    public Guid IngredientId { get; set; }
+    public Product Product { get; set; } = new();
+    public Ingredient Ingredient { get; set; } = new();
+
+    public Guid ProductId { get; set; } = Guid.Empty;
+    public Guid IngredientId { get; set; } = Guid.Empty;
 }

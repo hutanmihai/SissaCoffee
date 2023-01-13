@@ -21,7 +21,7 @@ public class UsersController: ControllerBase
     [Authorization("Customer")]
     public async Task<ActionResult<UserDTO>> GetMe()
     {
-        var userId = HttpContext.Items["UserId"].ToString();
+        var userId = HttpContext.Items["UserId"]?.ToString();
         if (userId is null)
         {
             return NotFound();

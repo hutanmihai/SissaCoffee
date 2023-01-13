@@ -10,21 +10,19 @@ namespace SissaCoffee.Services.UserService;
 
 public class UserService: IUserService
 {
-    private readonly IConfiguration _configuration;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IUserRepository _userRepository;
-    private readonly IJwtUtils _jwtUtils;
     private readonly IRoleRepository _roleRepository;
+    private readonly IJwtUtils _jwtUtils;
     private readonly IMapper _mapper;
 
-    public UserService(IConfiguration configuration, UserManager<ApplicationUser> userManager, IRoleRepository roleRepository, IUserRepository userRepository, IMapper mapper, IJwtUtils jwtUtils)
+    public UserService(UserManager<ApplicationUser> userManager, IUserRepository userRepository, IRoleRepository roleRepository, IJwtUtils jwtUtils, IMapper mapper)
     {
-        _configuration = configuration;
         _userManager = userManager;
-        _roleRepository = roleRepository;
         _userRepository = userRepository;
-        _mapper = mapper;
+        _roleRepository = roleRepository;
         _jwtUtils = jwtUtils;
+        _mapper = mapper;
     }
 
     public async Task<IdentityResult> RegisterUserAsync(RegisterUserDTO dto)

@@ -8,8 +8,8 @@ public class AuthorizationOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        var hasAuthorize = context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizationAttribute>().Any() || 
-                           context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizationAttribute>().Any();
+        var hasAuthorize = context.MethodInfo.DeclaringType != null && (context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizationAttribute>().Any() || 
+                                                                        context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizationAttribute>().Any());
         if (hasAuthorize)
         {
             operation.Security = new List<OpenApiSecurityRequirement>

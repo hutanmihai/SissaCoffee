@@ -83,11 +83,11 @@ app.Run();
 void SeedData(IHost app)
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-    using (var scope = scopedFactory.CreateScope())
+    using (var scope = scopedFactory?.CreateScope())
     {
-        var service = scope.ServiceProvider.GetService<RoleSeeder>();
-        var service2 = scope.ServiceProvider.GetService<UserSeeder>();
-        service.SeedRoles();
-        service2.SeedUsers();
+        var service = scope?.ServiceProvider.GetService<RoleSeeder>();
+        var service2 = scope?.ServiceProvider.GetService<UserSeeder>();
+        service?.SeedRoles();
+        service2?.SeedUsers();
     }
 }

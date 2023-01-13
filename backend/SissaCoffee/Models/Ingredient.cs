@@ -6,5 +6,5 @@ public class Ingredient: BaseEntity
 {
     public string Name { get; set; } = String.Empty;
     
-    public ICollection<ProductIngredient> Products { get; set; }
+    public ICollection<ProductIngredient> Products { get; set; } = new List<ProductIngredient>();
 }

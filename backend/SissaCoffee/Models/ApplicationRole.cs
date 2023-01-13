@@ -4,5 +4,5 @@ namespace SissaCoffee.Models;
 
 public class ApplicationRole : IdentityRole<Guid>
 { 
-    public ICollection<ApplicationUser> Users { get; set; }
+    public ICollection<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
 }

@@ -25,7 +25,8 @@ namespace SissaCoffee.Helpers.JwtUtils
                     new Claim("UserId", user.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"])),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8
+                        .GetBytes(_configuration["Jwt:Secret"] ?? "SecretKey")),
                     SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -42,7 +43,7 @@ namespace SissaCoffee.Helpers.JwtUtils
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var appPrivateKey = Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]);
+            var appPrivateKey = Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"] ?? "SecretKey");
 
             var tokenValidationParameters = new TokenValidationParameters
             { 
@@ -58,7 +59,12 @@ namespace SissaCoffee.Helpers.JwtUtils
                 tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
                
                 var jwtToken = (JwtSecurityToken)validatedToken; 
-                var userId = new Guid(jwtToken.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+                var userId = new Guid(jwtToken.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? Guid.Empty.ToString());
+
+                if (userId == Guid.Empty)
+                {
+                    return Guid.Empty;
+                }
                
                 return userId;
             }
