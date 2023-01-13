@@ -7,12 +7,10 @@ namespace SissaCoffee.Helpers.Seeders;
 public class UserSeeder
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly AppDbContext _context;
-    
-    public UserSeeder(UserManager<ApplicationUser> userManager, AppDbContext context)
+
+    public UserSeeder(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
-        _context = context;
     }
 
     public void SeedUsers()
