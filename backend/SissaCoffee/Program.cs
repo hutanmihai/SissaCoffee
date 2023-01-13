@@ -50,7 +50,13 @@ builder.Services.AddServices();
 builder.Services.AddSeeders();
 builder.Services.AddUtils();
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder2 => builder2.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -63,7 +69,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(builder2 => builder2.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:4200"));
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
