@@ -78,4 +78,10 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
             return false;
         }
+
+        public void Create(TEntity entity)
+        {
+            _context.Add(entity);
+            _context.SaveChanges();
+        }
     }

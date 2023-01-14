@@ -87,7 +87,13 @@ void SeedData(IHost app)
     {
         var service = scope?.ServiceProvider.GetService<RoleSeeder>();
         var service2 = scope?.ServiceProvider.GetService<UserSeeder>();
+        var service3 = scope?.ServiceProvider.GetService<TagSeeder>();
+        var service4 = scope?.ServiceProvider.GetService<IngredientSeeder>();
+        var service5 = scope?.ServiceProvider.GetService<ProductVariantSeeder>();
         service?.SeedRoles();
         service2?.SeedUsers();
+        service3?.SeedTags();
+        service4?.SeedIngredients();
+        service5?.SeedProductVariants();
     }
 }

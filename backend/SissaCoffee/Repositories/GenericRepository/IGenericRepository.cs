@@ -16,4 +16,6 @@ public interface IGenericRepository<TEntity> where TEntity : class
         Task<TEntity> FindByIdAsync(Guid id);
 
         Task<bool> SaveAsync();
+        
+        void Create(TEntity entity);
     }

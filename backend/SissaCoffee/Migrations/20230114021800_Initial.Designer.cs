@@ -12,7 +12,7 @@ using SissaCoffee.Data;
 namespace SissaCoffee.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230111183248_Initial")]
+    [Migration("20230114021800_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -331,6 +331,10 @@ namespace SissaCoffee.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("Size")
                         .HasColumnType("integer");
