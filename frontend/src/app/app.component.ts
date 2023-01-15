@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   sidenav!: MatSidenav;
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
+  user: IUser | null = null;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
       .subscribe((user: IUser | null) => {
         this.isLoggedIn = !!user;
         if (this.isLoggedIn) {
+          this.user = user;
           this.isAdmin = this.authService.checkRole(UserRole.Admin);
         }
       });

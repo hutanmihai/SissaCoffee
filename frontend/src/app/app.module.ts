@@ -10,6 +10,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {AppComponent} from './app.component';
 import {AuthModule} from "./modules/auth/auth.module";
+import {FullNamePipe} from "./pipes/full-name.pipe";
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -18,6 +19,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
+    FullNamePipe,
   ],
   imports: [
     // Internal modules
