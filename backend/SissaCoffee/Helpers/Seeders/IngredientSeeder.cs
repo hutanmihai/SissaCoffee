@@ -42,25 +42,7 @@ public class IngredientSeeder
             },
             new()
             {
-                Name = "Chocolate",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            },
-            new()
-            {
-                Name = "Vanilla",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            },
-            new()
-            {
-                Name = "Cinnamon",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            },
-            new()
-            {
-                Name = "Caramel",
+                Name = "Chocolate IceCream",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             },
@@ -72,13 +54,7 @@ public class IngredientSeeder
             },
             new()
             {
-                Name = "Cocoa Powder",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            },
-            new()
-            {
-                Name = "Ness",
+                Name = "Instant Coffee",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             }

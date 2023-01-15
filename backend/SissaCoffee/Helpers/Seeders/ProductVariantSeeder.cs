@@ -19,7 +19,7 @@ public class ProductVariantSeeder
             new()
             {
                 Name = "Small",
-                Size = 50,
+                Size = 30,
                 Unit = "ml",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -27,7 +27,7 @@ public class ProductVariantSeeder
             new()
             {
                 Name = "Tall",
-                Size = 200,
+                Size = 250,
                 Unit = "ml",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -35,7 +35,7 @@ public class ProductVariantSeeder
             new()
             {
                 Name = "Grande",
-                Size = 350,
+                Size = 330,
                 Unit = "ml",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -43,7 +43,7 @@ public class ProductVariantSeeder
             new()
             {
                 Name = "Venti",
-                Size = 450,
+                Size = 400,
                 Unit = "ml",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
