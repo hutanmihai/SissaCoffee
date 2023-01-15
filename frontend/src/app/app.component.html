@@ -11,8 +11,8 @@
       <ng-container *ngIf="isAdmin">
         <li><a routerLink="/admin" mat-raised-button color="accent">Admin</a></li>
       </ng-container>
-      <li><a routerLink="/" mat-raised-button color="accent">Menu</a></li>
       <ng-container *ngIf="isLoggedIn else notLoggedIn">
+        <li><a routerLink="/" mat-raised-button color="accent">Menu</a></li>
         <li>
           <button mat-raised-button (click)="logOut()">Log Out</button>
         </li>
