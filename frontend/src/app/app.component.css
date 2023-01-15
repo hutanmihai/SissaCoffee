@@ -41,3 +41,7 @@ mat-sidenav li {
 mat-sidenav a, mat-sidenav button {
   width: 100%;
 }
+
+mat-sidenav li p {
+  text-align: center;
+}
