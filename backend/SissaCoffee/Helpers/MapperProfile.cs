@@ -10,7 +10,10 @@ namespace SissaCoffee.Helpers
         {
             CreateMap<ApplicationUser, LoginUserDTO>();
             CreateMap<ApplicationUser, RegisterUserDTO>();
-            CreateMap<ApplicationUser, UserDTO>();
+            CreateMap<ApplicationUser, UserDTO>().ForMember(
+                dest => dest.Roles,
+                opt => opt.MapFrom(src => src.Roles.Select(x=>x.Name).ToList())
+            );
         }
 
     }

@@ -66,22 +66,96 @@ public class UserService: IUserService
         return _jwtUtils.GenerateJwtToken(user);
     }
     
-    public async Task<UserDTO?> GetUserDtoByIdAsync(Guid id)
-    {
-        var user =  await _userManager.FindByIdAsync(id.ToString());
-        var roles = await _userManager.GetRolesAsync(user);
-        return new UserDTO
-        {
-            Id = user.Id,
-            Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Roles = roles,
-        };
-    }
-    
     public async Task<ApplicationUser?> GetUserByEmailAsync(string email)
     {
         return await _userManager.FindByEmailAsync(email);
+    }
+
+    public async Task<IEnumerable<UserDTO>?> GetAllUsersDtoAsync()
+    {
+        var users = await _userRepository.GetUsersWithRolesAsync();
+        if (!users.Any()) return null;
+        return _mapper.Map<IEnumerable<UserDTO>>(users);
+    }
+
+    public async Task<UserDTO?> GetUserDtoByIdAsync(Guid id)
+    {
+        var user = await _userRepository.GetUserByIdWithRolesAsync(id);
+        if (user is null) return null;
+        return _mapper.Map<UserDTO>(user);
+    }
+    
+    public async Task<ApplicationUser?> CreateUserAsync(UserDTO userDto)
+    {
+        var userFound = await _userManager.FindByEmailAsync(userDto.Email);
+        if (userFound is not null) throw new Exception("User already exists.");
+        var userDtoRoles = new List<ApplicationRole>();
+        foreach (var userDtoRole in userDto.Roles)
+        {
+            var role = await _roleRepository.GetRoleByNameAsync(userDtoRole);
+            if (role is null) throw new Exception("Role not found.");
+            userDtoRoles.Add(role);
+        }
+        var user = new ApplicationUser
+        {
+            Email = userDto.Email,
+            UserName = userDto.Email,
+            FirstName = userDto.FirstName,
+            LastName = userDto.LastName,
+            Roles = userDtoRoles
+        };
+        var res = await _userManager.CreateAsync(user);
+        if (!res.Succeeded) throw new Exception(res.Errors.First().Description);
+        return user;
+    }
+    
+    public async Task UpdateUserAsync(Guid id, UserDTO userDto)
+    {
+        if (id != userDto.Id) throw new Exception("Id mismatch.");
+        
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        if (user is null) throw new Exception("User not found.");
+        
+        var userDtoRoles = new List<ApplicationRole>();
+        foreach (var userDtoRole in userDto.Roles)
+        {
+            var role = await _roleRepository.GetRoleByNameAsync(userDtoRole);
+            if (role is null) throw new Exception("Role not found.");
+            userDtoRoles.Add(role);
+        }
+        
+        user.FirstName = userDto.FirstName;
+        user.LastName = userDto.LastName;
+        user.Email = userDto.Email;
+        user.UserName = userDto.Email;
+        foreach (var userDtoRole in userDtoRoles)
+        {
+            if (!await _userManager.IsInRoleAsync(user, userDtoRole.Name))
+            {
+                await _userManager.AddToRoleAsync(user, userDtoRole.Name);
+            }
+        }
+        try
+        {
+            await _userManager.UpdateAsync(user);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public async Task DeleteUserAsync(Guid id)
+    {
+        try
+        {
+            var userFound = await _userManager.FindByIdAsync(id.ToString());
+            if (userFound is null) throw new Exception("User not found.");
+            await _userManager.DeleteAsync(userFound);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 }
