@@ -5,5 +5,7 @@ namespace SissaCoffee.Repositories.ProductRepository;
 
 public interface IProductRepository: IGenericRepository<Product>
 {
-    public new Task<List<Product>> GetAllProductsAsync();
+    public Task<List<Product>> GetAllProductsAsync();
+
+    public Task<Product?> GetProductByIdAsync(Guid id);
 }

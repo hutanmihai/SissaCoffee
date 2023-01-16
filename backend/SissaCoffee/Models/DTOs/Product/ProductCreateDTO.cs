@@ -4,6 +4,7 @@ namespace SissaCoffee.Models.DTOs.Product
     {
         public string Name { get; set; }
         public List<Guid> Ingredients { get; set; }
-        public Guid ProductVariant { get; set; }
+        public Guid Variant { get; set; }
+        public Guid? Tag { get; set; }
     }
 }

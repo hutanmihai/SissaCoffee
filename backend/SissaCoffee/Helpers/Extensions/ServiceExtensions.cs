@@ -1,6 +1,7 @@
 ﻿using SissaCoffee.Helpers.JwtUtils;
 using SissaCoffee.Helpers.Seeders;
 using SissaCoffee.Repositories.IngredientRepository;
+using SissaCoffee.Repositories.ProductIngredientRepository;
 using SissaCoffee.Repositories.ProductRepository;
 using SissaCoffee.Repositories.ProductVariantRepository;
 using SissaCoffee.Repositories.RoleRepository;
@@ -19,7 +20,10 @@ public static class ServiceExtensions
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
-
+            services.AddTransient<IIngredientRepository, IngredientRepository>();
+            services.AddTransient<IProductVariantRepository, ProductVariantRepository>();
+            services.AddTransient<ITagRepository, TagRepository>();
+            services.AddTransient<IProductIngredientRepository, ProductIngredientRepository>();
             return services;
         }
 
@@ -28,9 +32,6 @@ public static class ServiceExtensions
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IIngredientRepository, IngredientRepository>();
-            services.AddTransient<IProductVariantRepository, ProductVariantRepository>();
-            services.AddTransient<ITagRepository, TagRepository>();
 
             return services;
         }
