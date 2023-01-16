@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.formGroup.value as IUserLogin)
       .subscribe({
         next: (_) => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/products/list']);
         },
         error: (_) => {
           this.invalidCredentials = true;

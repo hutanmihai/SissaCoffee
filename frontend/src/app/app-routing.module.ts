@@ -10,9 +10,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: '',
-        redirectTo: '/',
-        pathMatch: 'full'
+        path: 'products/list',
+        pathMatch: 'full',
+        loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule),
       },
       {
         path: 'auth',
@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
+  {
+    path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule)
+  }
 ];
 
 @NgModule({

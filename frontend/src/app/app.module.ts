@@ -10,6 +10,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {AppComponent} from './app.component';
 import {AuthModule} from "./modules/auth/auth.module";
+import {ProductsModule} from "./modules/products/products.module";
 import {FullNamePipe} from "./pipes/full-name.pipe";
 
 export function tokenGetter() {
@@ -24,6 +25,7 @@ export function tokenGetter() {
   imports: [
     // Internal modules
     AuthModule,
+    ProductsModule,
     // External modules
     BrowserModule,
     BrowserAnimationsModule,

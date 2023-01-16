@@ -2,7 +2,7 @@
   <button mat-icon-button (click)="toggleSidenav()">
     <mat-icon>menu</mat-icon>
   </button>
-  <a routerLink="/" id="logo">SissaCoffee</a>
+  <a routerLink="/products/list" id="logo">SissaCoffee</a>
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -12,7 +12,7 @@
         <li><a routerLink="/admin" mat-raised-button color="accent">Admin</a></li>
       </ng-container>
       <ng-container *ngIf="isLoggedIn else notLoggedIn">
-        <li><a routerLink="/" mat-raised-button color="accent">Menu</a></li>
+        <li><a routerLink="/products/list" mat-raised-button color="accent">Menu</a></li>
         <li>
           <button mat-raised-button (click)="logOut()">Log Out</button>
         </li>
