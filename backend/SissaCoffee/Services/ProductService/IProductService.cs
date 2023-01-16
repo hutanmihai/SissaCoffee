@@ -1,8 +1,8 @@
-using SissaCoffee.Models.DTOs;
+using SissaCoffee.Models.DTOs.Product;
 
 namespace SissaCoffee.Services.ProductService;
 
 public interface IProductService
 {
-    public Task<List<ProductDTO>> GetAllProductAsync();
+    public Task<List<ProductDTO>> GetAllProductsAsync();
 }

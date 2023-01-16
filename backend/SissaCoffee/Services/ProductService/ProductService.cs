@@ -1,6 +1,5 @@
 using AutoMapper;
-using SissaCoffee.Models.DTOs;
-using SissaCoffee.Repositories.IngredientRepository;
+using SissaCoffee.Models.DTOs.Product;
 using SissaCoffee.Repositories.ProductRepository;
 
 namespace SissaCoffee.Services.ProductService;
@@ -8,41 +7,17 @@ namespace SissaCoffee.Services.ProductService;
 public class ProductService: IProductService
 {
     private readonly IProductRepository _productRepository;
-    private readonly IIngredientRepository _ingredientRepository;
+    private readonly IMapper _mapper;
 
-    public ProductService(IProductRepository productRepository, IIngredientRepository ingredientRepository)
+    public ProductService(IProductRepository productRepository, IMapper mapper)
     {
         _productRepository = productRepository;
-        _ingredientRepository = ingredientRepository;
+        _mapper = mapper;
     }
 
-    public async Task<List<ProductDTO>> GetAllProductAsync()
+    public async Task<List<ProductDTO>> GetAllProductsAsync()
     {
-        var products = await _productRepository.GetAllAsync();
-        var productsDTO = new List<ProductDTO>();
-        foreach (var product in products)
-        {
-            var tag = product.Tag?.Name;
-            var ingredientsIds = product.Ingredients?.Select(x => x.IngredientId).ToList();
-            var ingredients = new List<string>();
-            
-            foreach(var ingredientId in ingredientsIds)
-            {
-                var ingredient = await _ingredientRepository.FindByIdAsync(ingredientId);
-                ingredients.Add(ingredient.Name);
-            }
-            
-
-            productsDTO.Add(new ProductDTO()
-            {
-                Name = product.Name,
-                Size = product.Variant.Size,
-                Unit = product.Variant.Unit,
-                TagName = tag,
-                Ingredients = ingredients
-            });
-        }
-
-        return productsDTO;
+        var products = await _productRepository.GetAllProductsAsync();
+        return _mapper.Map<List<ProductDTO>>(products);
     }
 }
