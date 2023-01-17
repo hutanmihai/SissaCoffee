@@ -13,11 +13,13 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
+import {ProductAddComponent} from "./components/product-add/product-add.component";
 
 
 @NgModule({
   declarations: [
     ProductsComponent,
+    ProductAddComponent
   ],
   imports: [
     CommonModule,

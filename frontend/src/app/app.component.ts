@@ -33,8 +33,7 @@ export class AppComponent implements OnInit {
 
   logOut() {
     this.authService.logout();
-    this.router.navigateByUrl('/refresh', {skipLocationChange: true})
-      .then(() => this.router.navigate(['/']));
+    this.router.navigateByUrl('/auth/login');
   }
 
   toggleSidenav(): void {

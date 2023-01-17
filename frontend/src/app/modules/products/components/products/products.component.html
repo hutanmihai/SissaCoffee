@@ -4,7 +4,7 @@
   <li *ngFor="let product of products; index as i">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{product.name}}  #{{product.tag}}</mat-card-title>
+        <mat-card-title>{{product.name}}  <span *ngIf="product.tag"> #{{product.tag}}</span></mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div *ngFor="let ingredient of product.ingredients; index as j">
@@ -19,7 +19,8 @@
         </ng-container>
       </mat-card-content>
       <mat-card-content class="variant">
-          <p class="variant-p">Available in this Variant: {{product.variant.name}}, {{product.variant.size}}{{product.variant.unit}}</p>
+        <p class="variant-p">Available in this Variant: {{product.variant.name}}
+          , {{product.variant.size}}{{product.variant.unit}}</p>
       </mat-card-content>
     </mat-card>
   </li>
@@ -32,5 +33,5 @@
 </p>
 
 <div *ngIf="userCanEdit()">
-  <a routerLink="/products/list" mat-raised-button color="accent">Add Product</a>
+  <a routerLink="/products/new" mat-raised-button color="accent">Add Product</a>
 </div>

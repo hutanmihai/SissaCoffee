@@ -14,6 +14,3 @@ export interface IProductCreate {
   ingredients: string[];
   tag?: string;
 }
-
-export interface IProductUpdate extends IProductCreate {
-}
