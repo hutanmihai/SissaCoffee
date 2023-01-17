@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using SissaCoffee.Helpers.Attributes;
+using SissaCoffee.Models;
 using SissaCoffee.Models.DTOs.Product;
 using SissaCoffee.Services.ProductService;
 
@@ -16,13 +18,30 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
+    [Authorization("Customer")]
     public async Task<IActionResult> GetProducts()
     {
         var products = await _productService.GetAllProductsAsync();
         return Ok(products);
     }
     
+    [HttpGet("{id}")]
+    [Authorization("Admin")]
+    public async Task<IActionResult> GetProduct(Guid id)
+    {
+        try
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            return Ok(product);
+        }
+        catch
+        {
+            return NotFound();
+        }
+    }
+    
     [HttpPut("{id}")]
+    [Authorization("Admin")]
         public async Task<IActionResult> PutProduct(Guid id, [FromBody] ProductUpdateDTO dto)
         {
             try
@@ -37,6 +56,7 @@ public class ProductController : ControllerBase
         }
 
         [HttpPost]
+        [Authorization("Admin")]
         public async Task<ActionResult<ProductDTO>> PostProduct([FromBody] ProductCreateDTO dto)
         {
             try
@@ -50,6 +70,7 @@ public class ProductController : ControllerBase
         }
         
         [HttpDelete("{id}")]
+        [Authorization("Admin")]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
             try

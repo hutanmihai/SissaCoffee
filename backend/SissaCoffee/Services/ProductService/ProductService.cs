@@ -112,7 +112,7 @@ public class ProductService: IProductService
         var currentlyUsedTags = await _productRepository.GetAllProductsAsync();
         foreach (var products in currentlyUsedTags)
         {
-            if (products.Tag == tag)
+            if (products.Tag == tag && tag != null)
             {
                 throw new Exception("Tag already used");
             }
@@ -161,5 +161,15 @@ public class ProductService: IProductService
             throw new Exception("Product not found");
         }
         await _productRepository.DeleteAsync(product);
+    }
+
+    public async Task<ProductResponseDTO> GetProductByIdAsync(Guid id)
+    {
+        var product = await _productRepository.GetProductById2Async(id);
+        if (product is null)
+        {
+            throw new Exception("Product not found");
+        }
+        return product;
     }
 }

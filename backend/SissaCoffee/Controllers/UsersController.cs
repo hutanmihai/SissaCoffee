@@ -64,6 +64,7 @@ public class UsersController: ControllerBase
     }
 
     [HttpPost]
+    [Authorization("Admin")]
     public async Task<ActionResult<ApplicationUser>> PostUser([FromBody] UserDTO dto)
     {
         try
@@ -77,6 +78,7 @@ public class UsersController: ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorization("Admin")]
     public async Task<IActionResult> PutUser(Guid id, UserDTO user)
     {
         try
@@ -92,6 +94,7 @@ public class UsersController: ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorization("Admin")]
     public async Task<IActionResult> DeleteUser(Guid id)
     {
         try{

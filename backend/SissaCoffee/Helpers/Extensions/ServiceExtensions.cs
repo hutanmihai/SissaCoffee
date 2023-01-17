@@ -7,9 +7,12 @@ using SissaCoffee.Repositories.ProductVariantRepository;
 using SissaCoffee.Repositories.RoleRepository;
 using SissaCoffee.Repositories.TagRepository;
 using SissaCoffee.Repositories.UserRepository;
+using SissaCoffee.Services.IngredientService;
 using SissaCoffee.Services.ProductService;
+using SissaCoffee.Services.ProductVariantService;
 using SissaCoffee.Services.UserService;
 using SissaCoffee.Services.RoleService;
+using SissaCoffee.Services.TagService;
 
 namespace SissaCoffee.Helpers.Extensions;
 
@@ -32,6 +35,9 @@ public static class ServiceExtensions
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductVariantService, ProductVariantService>();
+            services.AddTransient<IIngredientService, IngredientService>();
+            services.AddTransient<ITagService, TagService>();
 
             return services;
         }
